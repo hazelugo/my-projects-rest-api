@@ -68,6 +68,7 @@ export function updateProject(id, input) {
       : {}),
     updated_at: nowIso(),
   }
+
   projects[index] = updated
   return clone(updated)
 }
