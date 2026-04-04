@@ -8,6 +8,20 @@
       "when": 1775097925316,
       "tag": "0000_sturdy_warbound",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1775290640609,
+      "tag": "0001_bent_jocasta",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1775290969529,
+      "tag": "0002_rich_mercury",
+      "breakpoints": true
     }
   ]
 }
