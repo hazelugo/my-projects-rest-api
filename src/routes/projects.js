@@ -8,6 +8,7 @@ import {
   deleteProject,
   getProjectById,
 } from '../data/projects.repository.js'
+
 import { parseJsonBody } from '../utils/body.js'
 import { ApiError } from '../utils/errors.js'
 import { sendCollection, sendResource } from '../utils/response.js'
@@ -79,6 +80,11 @@ projects.post('/:id/tasks', async (c) => {
     )
   }
 
+  const task = await createTask(db, projectId, payload)
+  c.header('Location', `/api/tasks/${task.id}`)
+  return sendResource(c, task, 201)
+})
+
 projects.get('/:id', async (c) => {
   const id = parseIdParam(c.req.param('id'))
 
@@ -115,7 +121,6 @@ projects.patch('/:id', async (c) => {
 
   return sendResource(c, updatedProject)
 })
-
 
 projects.delete('/:id', async (c) => {
   const id = parseIdParam(c.req.param('id'))
