@@ -60,10 +60,14 @@ const taskPatchSchema = z
       .trim()
       .min(1, { error: 'Task title must be a non-empty string.' })
       .optional(),
-    description: z.string({ error: 'Description must be a string.' }).optional(),
+    description: z
+      .string({ error: 'Description must be a string.' })
+      .optional(),
     status: z
       .string({ error: statusMessage })
-      .refine((value) => TASK_STATUSES.includes(value), { error: statusMessage })
+      .refine((value) => TASK_STATUSES.includes(value), {
+        error: statusMessage,
+      })
       .optional(),
   })
   .superRefine((value, ctx) => {
@@ -118,6 +122,32 @@ function mapZodIssuesToDetails(issues) {
   return details
 }
 
+const registerSchema = z.strictObject({
+  email: z.email({ error: 'Email must be a valid email address.' }),
+  password: z
+    .string({ error: 'Password is required.' })
+    .min(8, { error: 'Password must be at least 8 characters.' }),
+})
+
+const loginSchema = z.strictObject({
+  email: z.email({ error: 'Email must be a valid email address.' }),
+  password: z.string({ error: 'Password is required.' }).min(1, {
+    error: 'Password is required.',
+  }),
+})
+
+const refreshSchema = z.strictObject({
+  refresh_token: z
+    .string({ error: 'Refresh token is required.' })
+    .min(1, { error: 'Refresh token is required.' }),
+})
+
+const logoutSchema = z.strictObject({
+  refresh_token: z
+    .string({ error: 'Refresh token is required.' })
+    .min(1, { error: 'Refresh token is required.' }),
+})
+
 function validateWithSchema(payload, schema) {
   const result = schema.safeParse(payload)
 
@@ -142,4 +172,20 @@ export function validateTaskCreate(payload) {
 
 export function validateTaskPatch(payload) {
   return validateWithSchema(payload, taskPatchSchema)
+}
+
+export function validateRegister(payload) {
+  return validateWithSchema(payload, registerSchema)
+}
+
+export function validateLogin(payload) {
+  return validateWithSchema(payload, loginSchema)
+}
+
+export function validateRefresh(payload) {
+  return validateWithSchema(payload, refreshSchema)
+}
+
+export function validateLogout(payload) {
+  return validateWithSchema(payload, logoutSchema)
 }
