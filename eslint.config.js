@@ -1,14 +1,16 @@
-import js from "@eslint/js";
-import globals from "globals";
-import { defineConfig } from "eslint/config";
-import eslintConfigPrettier from "eslint-config-prettier/flat";
+import js from '@eslint/js'
+import globals from 'globals'
+import { defineConfig } from 'eslint/config'
+import eslintConfigPrettier from 'eslint-config-prettier/flat'
 
 export default defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs}"],
+    files: ['**/*.{js,mjs,cjs}'],
     plugins: { js },
-    extends: ["js/recommended"],
-    languageOptions: { globals: globals.browser },
+    extends: ['js/recommended'],
+    languageOptions: { globals: globals.node },
   },
   eslintConfigPrettier,
-]);
+])
+
+//trying to find out where a typo that is preventing my deployment is.
